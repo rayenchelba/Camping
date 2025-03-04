@@ -1,13 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled1/views/Addcalendar.dart';
-
-import '../classes/recommandation.dart';
 import '../main.dart';
 
 
 class Detailview extends StatefulWidget {
-  final recomdation p;
+  final dynamic p;
   const Detailview({super.key,required this.p});
 
   @override
