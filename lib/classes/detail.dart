@@ -1,0 +1,15 @@
+class detail{
+  String cpTitle;
+  String location;
+  String description;
+  String period;
+  String in_out;
+  String ages;
+  bool meal;
+  detail({required this.cpTitle,
+    required this.location,
+    required this.description,
+    required this.period,
+    required this.in_out,
+    required this.ages,
+    required this.meal,});}
