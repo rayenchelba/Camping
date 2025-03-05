@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled1/classes/recommandation.dart';
 import 'package:untitled1/views/AddView.dart';
+import 'Setting.dart';
 
+import 'Chat.dart';
 import 'Detailview.dart';
 import '../classes/camps.dart';
 
@@ -13,12 +16,14 @@ class home extends StatefulWidget {
 }
 
 class _homeState extends State<home> {
+  int _selectedIndex = 0;
   final List<camps> ls = camps.getcamps();
   List<recomdation> rc = recomdation.getrec();
   DraggableScrollableController scrolcrtl=DraggableScrollableController();
   double barpos=220;
   double titleocp=1;
   bool btn=true;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -39,8 +44,7 @@ class _homeState extends State<home> {
   void dispose() {
     // TODO: implement dispose
     scrolcrtl.dispose();
-    super.dispose();
-  }
+    super.dispose();}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -214,7 +218,11 @@ class _homeState extends State<home> {
                                       ),
                                       child: Column(
                                         children: [
-                                          Image.asset(rc[index].path),
+                                          Container(
+                                              width:double.infinity,
+                                              height: 200,
+                                              child: Image.asset(rc[index].path,fit: BoxFit.cover,height:MediaQuery.of(context).size.height/4
+                                        ,width:double.infinity,)),
                                           Padding(
                                             padding: const EdgeInsets.fromLTRB(
                                                 20, 10, 20, 10),
@@ -290,37 +298,60 @@ class _homeState extends State<home> {
           ),
         ),
       ),
-      bottomNavigationBar: Container(
-        margin: EdgeInsets.only(top: 30),
-        child: NavigationBar(
-          backgroundColor: Colors.white,
-          destinations: [
-            const NavigationDestination(
-              icon: Icon(Icons.home_outlined),
-              label: 'Home',
-            ),
-            const NavigationDestination(
-              icon: Icon(Icons.photo_album_outlined),
-              label: 'Gallery',
-            ),
-            FloatingActionButton(
-              backgroundColor: Color(0xff677E32),
-              shape: const CircleBorder(),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>Addview()));
-              },
-              child: const Icon(Icons.add),
-            ),
-            const NavigationDestination(
-              icon: Icon(Icons.chat_outlined),
-              label: 'Chat',
-            ),
-            const NavigationDestination(
-              icon: Icon(Icons.settings_outlined),
-              label: 'Settings',
-            ),
-          ],
-        ),
+        bottomNavigationBar: Container(
+          margin: EdgeInsets.only(top: 30),
+          child: NavigationBar(
+            backgroundColor: Colors.white,
+            selectedIndex: _selectedIndex,
+            onDestinationSelected: (int index) {
+              setState(() {
+                _selectedIndex = index;
+
+                switch (index) {
+                  case 0:
+                    break;
+                  case 1:
+                    break;
+                  case 2:
+                    break;
+                  case 3:
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Chat()));
+                    break;
+                  case 4:
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Setting()));
+                    break;
+                }
+              });
+            },
+            destinations: [
+              const NavigationDestination(
+                icon: Icon(Icons.home_outlined),
+                label: 'Home',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.photo_album_outlined),
+                label: 'Gallery',
+                selectedIcon: Icon(Icons.photo_album),
+              ),
+              FloatingActionButton(
+                backgroundColor: Color(0xff677E32),
+                shape: const CircleBorder(),
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>Addview()));
+                },
+                child: const Icon(Icons.add),
+              ),
+              const NavigationDestination(
+                icon: Icon(Icons.chat_outlined),
+                label: 'Chat',
+              ),
+              const NavigationDestination(
+                icon: Icon(Icons.settings_outlined),
+                label: 'Settings',
+              ),
+            ],
+          ),
+
       ),
       floatingActionButton: AnimatedSwitcher(
         duration: const Duration(seconds: 20),

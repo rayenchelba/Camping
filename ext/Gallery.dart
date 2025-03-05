@@ -16,7 +16,6 @@ class _GalleryState extends State<Gallery> {
   List<MediaFile> files = [];
 
   Future<void> _pickMedia() async {
-    // Request storage permissions
     var status = await Permission.storage.request();
     if (status.isGranted) {
       List<MediaFile> mediafiles = await GalleryPicker.pickMedia(
@@ -28,7 +27,6 @@ class _GalleryState extends State<Gallery> {
         files = mediafiles;
       });
     } else {
-      // Handle permission denied
       ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Storage permission is required'))
       );
@@ -43,11 +41,9 @@ class _GalleryState extends State<Gallery> {
         itemCount: files.length,
         itemBuilder: (BuildContext context, int index) {
           if (files[index].isImage) {
-            return Image.file(files[index] as File);  // Simple image display
+            return ImageProvider(media:files[index]);
           } else if (files[index].isVideo) {
-            return Text('Video: ${files[index].file}');  // Simple video path display
-          }
-          return Container();
+            return VideoProvider(media:files[index]);}
         },
       ),
       floatingActionButton: FloatingActionButton(

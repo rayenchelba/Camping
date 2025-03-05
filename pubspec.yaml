@@ -38,6 +38,9 @@ dependencies:
   flutter_svg: ^2.0.17
   flutter_map: ^8.1.0
   latlong2: ^0.9.1
+  firebase_core:
+  firebase_auth:
+  cloud_firestore:
   http:
 
 
